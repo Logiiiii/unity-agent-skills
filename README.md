@@ -1,50 +1,105 @@
+<div align="center">
+
+<!-- TODO: Add logo/banner image with light/dark mode variants -->
+<!-- <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
+  <img alt="Jahro Agent Skills" src="assets/banner-light.svg" width="600">
+</picture> -->
+
 # Jahro Agent Skills
 
-AI agent skills that help Unity developers set up, use, troubleshoot, and migrate to the [Jahro Console](https://jahro.io) debugging platform.
+**Your AI coding assistant becomes a Unity debugging expert.**
 
-These skills turn your AI coding assistant into a Jahro expert — generating correct code patterns, diagnosing issues, and guiding feature adoption.
+7 purpose-built skills that teach Claude Code, Cursor, and other AI assistants how to generate correct [Jahro](https://jahro.io/?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills) code — commands, watchers, snapshots, production config, migration, and troubleshooting.
 
-## Skills Included
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Unity 2021.3+](https://img.shields.io/badge/Unity-2021.3%2B-black?logo=unity)](https://unity.com)
+[![7 Skills](https://img.shields.io/badge/Skills-7-blue)]()
+[![Claude Code](https://img.shields.io/badge/Claude_Code-supported-orange)]()
+[![Cursor](https://img.shields.io/badge/Cursor-supported-purple)]()
+[![Discord](https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white)](https://discord.gg/txcHFRDeV4)
 
+</div>
 
-| Skill                     | What It Does                                                  |
-| ------------------------- | ------------------------------------------------------------- |
-| **jahro-setup**           | Installation, API key config, feature overview                |
-| **jahro-commands**        | `[JahroCommand]` attribute authoring and command organization |
-| **jahro-watcher**         | `[JahroWatch]` attribute authoring and variable monitoring    |
-| **jahro-snapshots**       | Snapshot capture modes, QA workflow, team setup               |
-| **jahro-production**      | Production safety: JAHRO_DISABLE, auto-disable, lifecycle     |
-| **jahro-troubleshooting** | Diagnose common issues with decision trees                    |
-| **jahro-migration**       | Migrate from custom debug UIs, loggers, cheat systems         |
+---
 
+<!-- TODO: Add demo GIF (800px wide, <5MB, 15-30s)
+     Record in Cursor or Claude Code:
+     1. Open a MonoBehaviour (e.g. PlayerController.cs)
+     2. Ask: "Add Jahro debug commands for movement and combat methods"
+     3. Show AI generating [JahroCommand] attributes with correct syntax
+     4. (Optional) Cut to Unity Play Mode showing commands in Jahro console
+-->
+<!-- <p align="center">
+  <img src="assets/demo.gif" alt="AI generating Jahro commands with agent skills loaded" width="800">
+</p> -->
+
+## What is this?
+
+**[Jahro](https://jahro.io/?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills)** is an in-game debugging platform for Unity — runtime commands, variable watching, log viewing, and shareable snapshot sessions, all accessible on-device without cables or ADB.
+
+**Agent skills** are markdown files that give AI coding assistants domain-specific knowledge. Instead of your AI guessing at Jahro's API, these skills provide exact attribute syntax, registration patterns, lifecycle rules, and diagnostic decision trees.
+
+Install the skills, then talk to your AI naturally:
+
+- **"Add debug commands to my PlayerController"** — AI generates `[JahroCommand]` attributes with correct naming, groups, parameter types, and `RegisterObject`/`UnregisterObject` lifecycle
+- **"Monitor these variables at runtime"** — AI generates `[JahroWatch]` attributes with supported types and performance-safe patterns
+- **"Migrate my custom IMGUI debug menu to Jahro"** — AI analyzes your existing code and produces Jahro equivalents file by file
+- **"My commands aren't showing up"** — AI walks a diagnostic decision tree: assembly scanning → registration → method visibility → lifecycle timing
+
+## Skills
+
+| Skill | What Your AI Can Do |
+|:------|:--------------------|
+| **jahro-setup** | Detect Jahro in your project, guide installation, configure API keys, recommend which features to adopt first |
+| **jahro-commands** | Generate `[JahroCommand]` attributes with correct syntax, `RegisterObject` boilerplate, group organization, and Visual/Text Mode guidance |
+| **jahro-watcher** | Generate `[JahroWatch]` attributes with supported types, group strategies, and performance implications |
+| **jahro-snapshots** | Configure snapshot capture modes (Recording vs Streaming), QA workflows, team sharing, and web console setup |
+| **jahro-production** | Set up production safety: `JAHRO_DISABLE` define, auto-disable in release builds, lifecycle controls, and build validation |
+| **jahro-troubleshooting** | Diagnose common issues using decision trees — commands missing, watcher not updating, console not opening, snapshots failing |
+| **jahro-migration** | Analyze existing debug systems (IMGUI menus, custom loggers, cheat frameworks) and generate incremental migration plans |
+
+Each skill is a self-contained SKILL.md file (~300-450 lines) backed by shared reference files with the complete Jahro API and common code patterns.
+
+## Quick Start
+
+```bash
+git clone https://github.com/jahro-console/unity-agent-skills.git .agents/skills/jahro
+```
+
+Then ask your AI: *"Help me add Jahro commands to my PlayerController"*
+
+That's it. Claude Code discovers skills automatically. For Cursor and other assistants, see [detailed installation](#installation) below.
 
 ## Installation
 
-### Claude Code (native SKILL.md support)
+### Claude Code
 
-Clone directly into your project's skills directory:
+Clone into your project's skills directory:
 
 ```bash
-git clone https://github.com/jahro/agent-skills.git .agents/skills/jahro
+git clone https://github.com/jahro-console/unity-agent-skills.git .agents/skills/jahro
 ```
 
-Or clone to a specific location and symlink:
+Or clone to a shared location and symlink into each project:
 
 ```bash
-git clone https://github.com/jahro/agent-skills.git ~/jahro-agent-skills
+git clone https://github.com/jahro-console/unity-agent-skills.git ~/jahro-agent-skills
 ln -s ~/jahro-agent-skills .agents/skills/jahro
 ```
 
-Claude Code automatically discovers skills in `.agents/skills/` and activates them based on the `description` field in each SKILL.md.
+Claude Code automatically discovers skills in `.agents/skills/` and activates them based on each skill's description field.
 
-### Cursor
+<details>
+<summary><b>Cursor</b></summary>
 
 Copy skill files into Cursor's rules directory:
 
 ```bash
-git clone https://github.com/jahro/agent-skills.git /tmp/jahro-skills
+git clone https://github.com/jahro-console/unity-agent-skills.git /tmp/jahro-skills
 
-# Copy each skill
+# Copy each skill as a rule
 for skill in /tmp/jahro-skills/skills/*/SKILL.md; do
   name=$(basename $(dirname "$skill"))
   cp "$skill" ".cursor/rules/${name}.md"
@@ -54,46 +109,83 @@ done
 mkdir -p .cursor/rules/jahro-references
 cp /tmp/jahro-skills/references/*.md .cursor/rules/jahro-references/
 
-# Cleanup
 rm -rf /tmp/jahro-skills
 ```
 
 In Cursor Settings, mark `jahro-setup.md` as **Always** so it provides context for all Jahro-related queries. Other skill rules can be left as **Auto**.
 
-### Generic AI Assistants
+</details>
+
+<details>
+<summary><b>Other AI Assistants</b></summary>
 
 Place the `skills/` and `references/` directories in your project root or any location your AI assistant scans for markdown context files. Most assistants that support project-level context will pick up the SKILL.md files automatically.
 
-## Requirements
-
-- **Unity**: 2021.3.0f1 or later
-- **Jahro**: 1.0.0-beta6+ (skills target current stable)
-- **AI Assistant**: Any assistant that supports markdown context files
+</details>
 
 ## How It Works
 
 Each skill is a standalone SKILL.md file with:
 
-- **YAML frontmatter** containing `name` and `description` (triggers skill activation)
-- **Markdown body** with concise instructions, code templates, and links to shared reference files
+- **YAML frontmatter** — `name` and `description` fields that tell the AI *when* to activate the skill
+- **Markdown body** — concise instructions, code templates, and links to shared reference files
 
 Skills reference two shared files in `references/`:
 
-- `api-reference.md` — complete Jahro API (attributes, methods, events, types)
-- `common-patterns.md` — reusable code patterns and anti-patterns
+- **api-reference.md** — complete Jahro API: attributes, methods, events, supported types
+- **common-patterns.md** — reusable code patterns (RegisterObject lifecycle, combined commands + watchers, anti-patterns)
 
-The AI reads only what it needs: the triggered skill (~300-450 lines) plus reference files on demand.
+The AI reads only what it needs: the triggered skill plus reference files on demand. Total context per query stays lean.
+
+## Jahro at a Glance
+
+If you're new to Jahro — here's what the skills help you set up:
+
+**In-Game Logs** — Jahro intercepts all `Debug.Log`, `Debug.LogWarning`, and `Debug.LogError` calls automatically. Filter, search, and read stack traces directly on-device. No ADB logcat, no Xcode, no cables.
+
+**Runtime Commands** — Add `[JahroCommand]` to any method and it becomes callable from an in-game console. Supports parameters (`int`, `float`, `bool`, `string`, `Vector2`, `Vector3`, `enum`), autocomplete, and a touch-friendly Visual Mode with generated forms.
+
+```csharp
+[JahroCommand("spawn-enemy", "Spawning", "Spawn enemies at position")]
+public void SpawnEnemy(Vector3 position, int count) { /* ... */ }
+```
+
+**Variable Watcher** — Add `[JahroWatch]` to fields and properties for a real-time monitoring dashboard. No `Debug.Log` spam, no log scrolling. Values only update when the Watcher tab is open — near-zero overhead.
+
+```csharp
+[JahroWatch("Health", "Player", "Current HP")]
+public float health = 100f;
+```
+
+**Shareable Snapshots** — Capture logs + screenshots + device metadata in a single session. Share via URL. Supports live streaming to the [web console](https://jahro.io/docs?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills) for real-time team collaboration.
+
+Works on **PC, Mac, Android, and iOS**. Press `~` on desktop, triple-tap on mobile. Unity 2021.3+, zero external dependencies.
 
 ## Updating
 
-When Jahro releases new features:
-
 ```bash
-cd .agents/skills/jahro  # or wherever you cloned
+cd .agents/skills/jahro   # or wherever you cloned
 git pull
 ```
 
-Skills are versioned alongside Jahro releases. See [CHANGELOG.md](CHANGELOG.md) for what changed.
+Skills are versioned alongside Jahro releases. See [CHANGELOG.md](CHANGELOG.md) for details.
+
+## Links
+
+- **Website** — [jahro.io](https://jahro.io/?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills)
+- **Documentation** — [jahro.io/docs](https://jahro.io/docs?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills)
+- **Unity Package** — [github.com/jahro-console/unity-package](https://github.com/jahro-console/unity-package)
+- **Discord** — [Join the community](https://discord.gg/txcHFRDeV4)
+
+## Requirements
+
+- **Unity**: 2021.3.0f1 or later
+- **Jahro**: 1.0.0-beta6+ (skills target current stable)
+- **AI Assistant**: Any assistant that supports markdown context files (Claude Code, Cursor, Windsurf, etc.)
+
+## Contributing
+
+Issues and PRs are welcome. If you find a case where the AI generates incorrect Jahro code with skills loaded, [open an issue](https://github.com/jahro-console/unity-agent-skills/issues) — that's exactly the kind of bug these skills are built to prevent.
 
 ## License
 
