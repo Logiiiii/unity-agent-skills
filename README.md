@@ -13,7 +13,6 @@
 [![Jahro Console](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjahro-console%2Funity-package%2Fmain%2Fpackage.json&query=%24.version&logo=unity&label=Jahro%20Console&color=purple&logoColor=black)](https://github.com/jahro-console/unity-package)
 [![Unity 2021.3+](https://img.shields.io/badge/Unity-2021.3%2B-black?logo=unity)](https://unity.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-<!-- [![Discord](https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white)](https://discord.gg/txcHFRDeV4) -->
 
 [Getting Started](https://jahro.io/docs/getting-started?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills) •
 [Website](https://jahro.io?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills) •
