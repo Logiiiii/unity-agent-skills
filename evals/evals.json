@@ -1,0 +1,291 @@
+{
+  "skill_name": "jahro-skills",
+  "evals": [
+    {
+      "id": 1,
+      "skill": "jahro-setup",
+      "prompt": "I just added Jahro to my Unity project through the Package Manager. What do I do next?",
+      "expected_output": "Guides user through API key setup at console.jahro.io, pasting key in Tools > Jahro Settings, and opening console with ~ or triple-tap",
+      "files": [],
+      "expectations": [
+        "Mentions API key setup at console.jahro.io",
+        "References Tools > Jahro Settings menu path",
+        "Explains how to open console (~ key or triple-tap on mobile)",
+        "Does not invent non-existent Jahro APIs"
+      ]
+    },
+    {
+      "id": 2,
+      "skill": "jahro-setup",
+      "prompt": "How can I tell if Jahro is already installed in my Unity project?",
+      "expected_output": "Suggests checking Packages/manifest.json for io.jahro.console and looking for using JahroConsole imports",
+      "files": [],
+      "expectations": [
+        "Mentions Packages/manifest.json",
+        "References io.jahro.console package identifier",
+        "Suggests checking for JahroConsole namespace usage",
+        "Does not suggest incorrect package IDs"
+      ]
+    },
+    {
+      "id": 3,
+      "skill": "jahro-setup",
+      "prompt": "I have Jahro installed but I'm not sure which features to use first. I'm building a mobile game and mainly need to debug on device.",
+      "expected_output": "Recommends starting with logs (automatic), then commands, then watcher, then snapshots for team sharing",
+      "files": [],
+      "expectations": [
+        "Recommends logs as easiest starting point (no code changes needed)",
+        "Suggests commands for runtime testing",
+        "Mentions watcher for variable monitoring",
+        "Mentions snapshots for team sharing",
+        "References mobile activation (triple-tap)"
+      ]
+    },
+    {
+      "id": 4,
+      "skill": "jahro-commands",
+      "prompt": "Help me add Jahro debug commands to this PlayerController:\n\n```csharp\nusing UnityEngine;\n\npublic class PlayerController : MonoBehaviour\n{\n    public float moveSpeed = 5f;\n    public int health = 100;\n\n    void Update() { /* movement logic */ }\n\n    public void TakeDamage(int amount) { health -= amount; }\n    public void Heal(float amount) { health += Mathf.RoundToInt(amount); }\n    public void Teleport(Vector3 position) { transform.position = position; }\n    public void ResetPosition() { transform.position = Vector3.zero; }\n    public static void RestartLevel() { UnityEngine.SceneManagement.SceneManager.LoadScene(0); }\n}\n```",
+      "expected_output": "Generates [JahroCommand] attributes with correct syntax, adds RegisterObject/UnregisterObject, uses kebab-case names",
+      "files": [],
+      "expectations": [
+        "Uses [JahroCommand(name, group, description)] 3-parameter constructor",
+        "Uses kebab-case for command names",
+        "Adds Jahro.RegisterObject(this) in OnEnable",
+        "Adds Jahro.UnregisterObject(this) in OnDisable",
+        "Does NOT annotate Update() or other lifecycle methods",
+        "Adds using JahroConsole import",
+        "RestartLevel (static) does not require RegisterObject"
+      ]
+    },
+    {
+      "id": 5,
+      "skill": "jahro-commands",
+      "prompt": "I want to register some Jahro commands dynamically at runtime using delegates — for example, adding gold, setting time scale, and forcing a garbage collection",
+      "expected_output": "Uses Jahro.RegisterCommand with correct delegate overloads and parameter order",
+      "files": [],
+      "expectations": [
+        "Uses Jahro.RegisterCommand for no-param command (GC collect)",
+        "Uses Jahro.RegisterCommand<T> for parameterized commands",
+        "Gets parameter order correct: (name, description, groupName, callback) for the full overload",
+        "Shows correct generic syntax for typed parameters"
+      ]
+    },
+    {
+      "id": 6,
+      "skill": "jahro-commands",
+      "prompt": "I have about 20 Jahro commands scattered across my project. How should I organize them into groups, and can I have two commands with the same name but different parameters?",
+      "expected_output": "Recommends logical group names, confirms overload support, mentions Visual Mode groups and favorites",
+      "files": [],
+      "expectations": [
+        "Recommends organizing by system/category (e.g. Spawning, Cheats, Game)",
+        "Confirms command overloads are supported",
+        "Mentions Visual Mode displays groups as browsable categories",
+        "Mentions favorites system for frequently-used commands"
+      ]
+    },
+    {
+      "id": 7,
+      "skill": "jahro-watcher",
+      "prompt": "Add Jahro watchers to monitor my player's health, stamina, velocity, and score in real-time instead of using Debug.Log:\n\n```csharp\nusing UnityEngine;\n\npublic class PlayerController : MonoBehaviour\n{\n    public float health = 100f;\n    public float stamina = 50f;\n    public Vector3 velocity;\n    private int _score;\n\n    public int Score => _score;\n\n    void Update()\n    {\n        velocity = GetComponent<Rigidbody>().velocity;\n        Debug.Log($\"Health: {health}, Score: {_score}\");\n    }\n}\n```",
+      "expected_output": "Generates [JahroWatch] attributes with correct syntax, adds RegisterObject, suggests removing Debug.Log",
+      "files": [],
+      "expectations": [
+        "Uses [JahroWatch(name, group, description)] correct constructor",
+        "Adds RegisterObject/UnregisterObject in OnEnable/OnDisable",
+        "Suggests removing the Debug.Log line in Update",
+        "Works on both fields (health, stamina) and properties (Score)",
+        "Adds using JahroConsole import"
+      ]
+    },
+    {
+      "id": 8,
+      "skill": "jahro-watcher",
+      "prompt": "I already have Jahro commands on this class. Now add watchers for playerCount and gameTime:\n\n```csharp\nusing UnityEngine;\nusing JahroConsole;\n\npublic class GameManager : MonoBehaviour\n{\n    public int playerCount;\n    public float gameTime;\n\n    void OnEnable() => Jahro.RegisterObject(this);\n    void OnDisable() => Jahro.UnregisterObject(this);\n\n    [JahroCommand(\"reset-game\", \"Game\", \"Reset game state\")]\n    public void ResetGame() { /* ... */ }\n}\n```",
+      "expected_output": "Adds JahroWatch attributes without duplicating RegisterObject calls",
+      "files": [],
+      "expectations": [
+        "Adds [JahroWatch] attributes to playerCount and gameTime",
+        "Does NOT add duplicate RegisterObject/UnregisterObject calls",
+        "Recognizes RegisterObject scans for both commands AND watchers"
+      ]
+    },
+    {
+      "id": 9,
+      "skill": "jahro-watcher",
+      "prompt": "What types can I use with JahroWatch? I have ints, custom classes, Transforms, and arrays.",
+      "expected_output": "Lists supported types with display behavior, notes custom class limitations",
+      "files": [],
+      "expectations": [
+        "Lists primitives: int, float, bool, string",
+        "Lists Unity types: Vector2, Vector3, Quaternion, Transform",
+        "Lists components: Rigidbody, Collider, AudioSource, Camera",
+        "Mentions arrays show TypeName[length]",
+        "Notes performance: values only read when Watcher UI is visible"
+      ]
+    },
+    {
+      "id": 10,
+      "skill": "jahro-snapshots",
+      "prompt": "Help me set up Jahro snapshots for my QA team. We're a team of 5 — 2 QA and 3 devs. We need QA to capture bugs from mobile devices and share them with devs.",
+      "expected_output": "Recommends Streaming mode, explains QA capture workflow, mentions web console for viewing",
+      "files": [],
+      "expectations": [
+        "Recommends Streaming mode for team workflow",
+        "Explains QA workflow: open console > Snapshots tab > Start > reproduce > Stop > share link",
+        "Mentions mobile activation (triple-tap)",
+        "References web console for viewing shared snapshots",
+        "Mentions API key must be configured"
+      ]
+    },
+    {
+      "id": 11,
+      "skill": "jahro-snapshots",
+      "prompt": "What's the difference between Recording and Streaming mode in Jahro snapshots? Which should I use?",
+      "expected_output": "Explains Recording vs Streaming modes with use cases for each",
+      "files": [],
+      "expectations": [
+        "Recording: local-only until manual upload",
+        "Streaming (All): real-time upload ~5s intervals",
+        "Streaming (Except Editor): hybrid mode",
+        "Mentions configuration location: Tools > Jahro Settings"
+      ]
+    },
+    {
+      "id": 12,
+      "skill": "jahro-snapshots",
+      "prompt": "I'm a QA tester on a mobile game team. How do I capture a bug in Jahro and send it to the developers?",
+      "expected_output": "Step-by-step QA capture and sharing workflow on mobile",
+      "files": [],
+      "expectations": [
+        "Mentions triple-tap to open console on mobile",
+        "Navigate to Snapshots tab",
+        "Start Snapshot, reproduce issue, Stop Snapshot",
+        "Upload or copy auto-generated link",
+        "Session includes logs + screenshots + device info"
+      ]
+    },
+    {
+      "id": 13,
+      "skill": "jahro-production",
+      "prompt": "We're preparing our first release build. How do I make sure Jahro doesn't end up in the production build?",
+      "expected_output": "Explains three-tier disable mechanism with setup steps",
+      "files": [],
+      "expectations": [
+        "Explains JAHRO_DISABLE preprocessor define as highest priority",
+        "Explains Auto-disable in Release Builds setting",
+        "References Tools > Jahro Settings for configuration",
+        "Mentions validation: look for 'Jahro Console: Disabled in this build' in logs",
+        "Does NOT suggest removing Jahro from the project"
+      ]
+    },
+    {
+      "id": 14,
+      "skill": "jahro-production",
+      "prompt": "I want to completely strip Jahro from my release builds using preprocessor defines. How do I set that up?",
+      "expected_output": "Guides JAHRO_DISABLE setup in Player Settings",
+      "files": [],
+      "expectations": [
+        "Add JAHRO_DISABLE to Player Settings > Scripting Define Symbols",
+        "Semicolon-separated if other defines exist",
+        "Explains this overrides all other settings",
+        "Does not invent non-existent preprocessor defines"
+      ]
+    },
+    {
+      "id": 15,
+      "skill": "jahro-production",
+      "prompt": "Give me a checklist to validate that Jahro is properly disabled before we ship our release build.",
+      "expected_output": "Production readiness checklist with verification steps",
+      "files": [],
+      "expectations": [
+        "Check Auto-disable in Release Builds is ON",
+        "Build as Release (not Development Build)",
+        "Check logs for 'Jahro Console: Disabled in this build'",
+        "Verify Jahro.Enabled returns false at runtime",
+        "Console should not open on ~ or triple-tap"
+      ]
+    },
+    {
+      "id": 16,
+      "skill": "jahro-troubleshooting",
+      "prompt": "I added JahroCommand to my EnemySpawner but the command doesn't appear in the Jahro console. What's wrong?\n\n```csharp\nusing JahroConsole;\nusing UnityEngine;\n\npublic class EnemySpawner : MonoBehaviour\n{\n    [JahroCommand(\"spawn-wave\", \"Spawning\", \"Spawn a wave of enemies\")]\n    public void SpawnWave(int count) { /* ... */ }\n\n    void Start()\n    {\n        Debug.Log(\"EnemySpawner started\");\n    }\n}\n```",
+      "expected_output": "Identifies missing RegisterObject call as primary issue",
+      "files": [],
+      "expectations": [
+        "Identifies missing RegisterObject call (instance method needs it)",
+        "Suggests adding OnEnable/OnDisable with RegisterObject/UnregisterObject",
+        "Mentions assembly scanning as secondary check",
+        "Notes the command would work without registration if static"
+      ]
+    },
+    {
+      "id": 17,
+      "skill": "jahro-troubleshooting",
+      "prompt": "I installed Jahro but when I press ~ in Play Mode nothing happens. The console doesn't open.",
+      "expected_output": "Decision tree for console-not-opening diagnosis",
+      "files": [],
+      "expectations": [
+        "Check Enable Jahro in Tools > Jahro Settings",
+        "Check JAHRO_DISABLE in Scripting Define Symbols",
+        "Verify Launch Key setting",
+        "Check if Release build with Auto-disable on",
+        "Look for 'Jahro Console: Disabled in this build' in Unity console"
+      ]
+    },
+    {
+      "id": 18,
+      "skill": "jahro-troubleshooting",
+      "prompt": "My Jahro watchers show up but the values are stuck — they don't update even though I know the values are changing in my game.",
+      "expected_output": "Diagnoses watcher update issues with checks",
+      "files": [],
+      "expectations": [
+        "Verify Watcher tab is open (values only read when UI visible)",
+        "Check if watching a field vs property",
+        "Verify RegisterObject was called",
+        "Check if object was destroyed without unregistering"
+      ]
+    },
+    {
+      "id": 19,
+      "skill": "jahro-migration",
+      "prompt": "I have this IMGUI debug menu. Help me migrate it to use Jahro instead.\n\n```csharp\nusing UnityEngine;\n\npublic class DebugMenu : MonoBehaviour\n{\n    private bool showMenu;\n\n    void OnGUI()\n    {\n        if (GUI.Button(new Rect(10, 10, 100, 30), \"Toggle Menu\"))\n            showMenu = !showMenu;\n\n        if (!showMenu) return;\n\n        if (GUI.Button(new Rect(10, 50, 150, 30), \"God Mode\"))\n            Player.GodMode = true;\n\n        if (GUI.Button(new Rect(10, 90, 150, 30), \"Add 1000 Gold\"))\n            Player.Gold += 1000;\n\n        if (GUI.Button(new Rect(10, 130, 150, 30), \"Skip Level\"))\n            LevelManager.SkipToNext();\n\n        GUI.Label(new Rect(10, 170, 200, 30), $\"FPS: {1f/Time.deltaTime:F0}\");\n        GUI.Label(new Rect(10, 200, 200, 30), $\"Health: {Player.Health}\");\n    }\n}\n```",
+      "expected_output": "Maps buttons to JahroCommand, labels to JahroWatch, generates replacement code",
+      "files": [],
+      "expectations": [
+        "Maps GUI.Button actions to [JahroCommand] attributes",
+        "Maps GUI.Label monitoring to [JahroWatch] attributes",
+        "Generates complete replacement code with Jahro patterns",
+        "Advises DebugMenu/OnGUI class can be removed after migration",
+        "Mentions Visual Mode as replacement for button-based UI"
+      ]
+    },
+    {
+      "id": 20,
+      "skill": "jahro-migration",
+      "prompt": "I have a custom logger wrapper. Should I migrate this to Jahro?\n\n```csharp\npublic static class GameLogger\n{\n    public static void Log(string category, string message)\n    {\n        Debug.Log($\"[{category}] {message}\");\n    }\n\n    public static void LogWarning(string category, string message)\n    {\n        Debug.LogWarning($\"[{category}] {message}\");\n    }\n\n    public static void LogError(string category, string message)\n    {\n        Debug.LogError($\"[{category}] {message}\");\n    }\n}\n```",
+      "expected_output": "Advises logger can be kept or removed since Jahro intercepts Debug.Log automatically",
+      "files": [],
+      "expectations": [
+        "Explains Jahro intercepts Debug.Log/LogWarning/LogError automatically",
+        "No migration needed for log interception",
+        "Does NOT suggest a Jahro.Log() API (doesn't exist)",
+        "May suggest keeping wrapper if categories add value"
+      ]
+    },
+    {
+      "id": 21,
+      "skill": "jahro-migration",
+      "prompt": "I have this custom cheat command system. How do I migrate it to Jahro?\n\n```csharp\nusing System;\nusing System.Collections.Generic;\n\npublic class CheatManager\n{\n    private Dictionary<string, Action<string[]>> cheats = new();\n\n    public void RegisterCheat(string name, Action<string[]> handler)\n    {\n        cheats[name] = handler;\n    }\n\n    public void Execute(string input)\n    {\n        var parts = input.Split(' ');\n        var cmd = parts[0];\n        var args = parts[1..];\n        if (cheats.TryGetValue(cmd, out var handler))\n            handler(args);\n    }\n}\n\n// Usage:\n// cheatManager.RegisterCheat(\"god\", args => Player.GodMode = true);\n// cheatManager.RegisterCheat(\"gold\", args => Player.Gold += int.Parse(args[0]));\n// cheatManager.RegisterCheat(\"tp\", args => Player.Teleport(float.Parse(args[0]), float.Parse(args[1]), float.Parse(args[2])));\n```",
+      "expected_output": "Maps dictionary cheats to JahroCommand attributes or RegisterCommand delegates with typed parameters",
+      "files": [],
+      "expectations": [
+        "Maps cheats to [JahroCommand] or Jahro.RegisterCommand delegates",
+        "Converts string[] args to typed parameters (int, float, Vector3)",
+        "Recommends 'Cheats' group for organization",
+        "Shows Jahro handles parameter parsing automatically",
+        "Suggests incremental migration (both can coexist)",
+        "CheatManager can be removed after migration"
+      ]
+    }
+  ]
+}
